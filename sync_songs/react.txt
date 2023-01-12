@@ -1,0 +1,63 @@
+//// React setup in django ////
+
+
+django-admin startapp frontend
+cd .\frontend\
+mkdir static
+mkdir templates
+mkdir static/frontend
+mkdir static/css
+mkdir static/images
+mkdir src
+mkdir src/components
+npm init -y
+npm i webpack webpack-cli --save-dev
+npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+npm i react react-dom
+npm install @material-ui/core
+npm install @babel/plugin-proposal-class-properties
+npm install react-router-dom
+npm install @material-ui/icons
+
+/////// configuration key??+++++++++++++
+frontend/babel.config.json
+frontend/webpack.config.json
+frontend/package.json ---in add
+        "scripts": {
+                        "dev": "webpack --mode development --watch",
+                        "build": "webpack --mode production"
+                    },
+
+
+src/index.js
+templates/frontend/index.html
+add in frontend/views.py ++
+        from django.shortcuts import render
+
+        # Create your views here.
+        def index(request, *args, **kwargs):
+            return render(request, 'frontend/index.html')
+
+configure urls of frontend 
+src/components/app.js ++ 
+        import React, { Component } from "react";
+        import { render } from "react-dom";
+
+        export default class App extends Component {
+        constructor(props) {
+            super(props);
+        }
+
+        render() {
+            return <h1>Testing React Code</h1>;
+        }
+        }
+
+        const appDiv = document.getElementById("app");
+        render(<App />, appDiv);
+
+src/index.js ++
+        import App from "./components/App";
+
+python3 manage.py runserver -- on 1 bash
+at cd frontend --- npm run dev
