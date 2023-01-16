@@ -1,8 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const CreateRoomPage = () =>{
-        return <p>This is the Create Room page</p>;
-    
+const CreateRoomPage = () => {
+
+        const [guest_can_pause, setguest_can_pause] = useState('');
+        const [votes_to_skip, setvotes_to_skip] = useState('');
+
+        const handleCreateForm = (e) =>{
+                e.preventDefault()
+                fetch("http://127.0.0.1:8000/create",{
+                        headers:{
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                        },
+                        method:'POST',
+                        body: JSON.stringify({
+                                guest_can_pause:guest_can_pause,
+                                votes_to_skip:votes_to_skip,
+                        }) 
+                })
+                .then((response) => response.json())
+                .then((data) => console.log(data));
+        }
+
+        return (
+                <div>
+                        <p>Create Room</p>
+                        <form onSubmit={handleCreateForm} >
+                                <p>Guest Control Of PlayBack State</p>
+                                <input type="radio" value="True"  onChange={(e) => setguest_can_pause(e.target.value)} name="Pause"/>
+                                <label>Play/Pause</label>
+                                <br/>
+                                <input type="radio" value="False" onChange={(e) => setguest_can_pause(e.target.value)} name="Pause"/>
+                                <label>No Control</label>
+                                <br/>
+                                <input type="integer" min="1" value={votes_to_skip} onChange={(e) => setvotes_to_skip(e.target.value)} required />
+                                <br/>
+                                <label>Votes Required to Skip Songs</label>
+                                <br/>
+                                <input type="submit"value="Create" />
+                        </form>
+                        <input type="submit" value="Back" />
+                </div>
+        );
+
 }
 
 export default CreateRoomPage;
