@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateRoomPage = () => {
 
         const [guest_can_pause, setguest_can_pause] = useState('');
         const [votes_to_skip, setvotes_to_skip] = useState('');
+        const navigate = useNavigate()
 
         const handleCreateForm = (e) =>{
                 e.preventDefault()
-                fetch("http://127.0.0.1:8000/create",{
+                fetch("http://127.0.0.1:8000/create-room",{
                         headers:{
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
@@ -19,7 +21,7 @@ const CreateRoomPage = () => {
                         }) 
                 })
                 .then((response) => response.json())
-                .then((data) => console.log(data));
+                .then((data) => navigate("/room/" + data.code));
         }
 
         return (

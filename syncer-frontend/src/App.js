@@ -14,7 +14,7 @@ function App(){
           <Route exact path="/" element={<HomePage/>}/>
           <Route path="/join" element={<RoomJoinPage/>} />
           <Route path="/create" element={<CreateRoomPage/>} />
-          <Route path="/room/:code" element={<Room/>} />
+          <Route path="/room/:roomCode" element={<Room/>} />
         </Routes>
       </Router>
     );
