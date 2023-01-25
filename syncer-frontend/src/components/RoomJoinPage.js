@@ -9,11 +9,12 @@ const RoomJoinPage = () =>{
 
         const getJoinCode = () =>{
                 console.log(RoomCode);
-                fetch("http://127.0.0.1:8000/join-room",{
+                fetch("http://127.0.0.1:8000/api/join-room",{
                         method:"POST",
                         headers: {"Content-Type":"application/json"},
                         body: JSON.stringify({
-                                code:RoomCode
+                                code:RoomCode + '#',
+                                host:"host#",
                         }),
                 }).then((Response) => {
                         if(Response.ok) {

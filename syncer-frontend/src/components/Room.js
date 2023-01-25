@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from "react";
 import { useParams } from "react-router-dom";
+import { checkCookie, setCookie, getCookie } from "../js/CookieSetup";
 
 const Room = () =>{
 
@@ -8,9 +9,23 @@ const Room = () =>{
     const [guestCanPause, setguestCanPause] = useState('False');
     const [isHost,setisHost] = useState('False');
 
+    
+
     useEffect(() => {
 
-        fetch(`http://127.0.0.1:8000/get-room?code=${roomCode}`)
+        let host = checkCookie() + "#";
+        console.log("Returned session key : ",host);
+        fetch(`http://127.0.0.1:8000/api/get-room?code=${roomCode}`, {
+            headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify({
+                    code:roomCode + "#",
+                    host:host,
+            }),
+        })
         .then((response) => response.json())
         .then((data) => {
             setVotesToSkip(data.votes_to_skip);
